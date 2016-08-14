@@ -39,9 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point.cs" />
-    <Compile Include="Polygon.cs" />
+    <Compile Include="Edge.cs" />
+    <Compile Include="EdgeList.cs" />
+    <Compile Include="EdgeReorderer.cs" />
+    <Compile Include="Geometry\Circle.cs" />
+    <Compile Include="Geometry\LineSegment.cs" />
+    <Compile Include="Geometry\Point.cs" />
+    <Compile Include="Geometry\Polygon.cs" />
+    <Compile Include="Geometry\Rectangle.cs" />
+    <Compile Include="HalfEdge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,6 +18,8 @@ namespace coneil.Math.Voronoi.Geometry
             return p.X == X && p.Y == Y;
         }
 
+        public bool AtInfinity() { return double.IsInfinity(X) || double.IsInfinity(Y); }
+
         public bool IsUnassigned()
         {
             return X == double.MinValue && Y == double.MinValue;

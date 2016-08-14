@@ -12,6 +12,7 @@ namespace coneil.Math.Voronoi
         private static List<Edge> s_pool = new List<Edge>();
         private static int _nEdges = 0;
 
+        internal static Edge DELETED = new Edge();
 
         // ax + by = c
         internal double A;

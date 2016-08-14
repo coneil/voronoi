@@ -5,16 +5,22 @@ using coneil.Math.Voronoi.Geometry;
 
 namespace coneil.Math.Voronoi
 {
-    public class Site
+    internal sealed class Site
     {
         private static List<Site> s_pool = new List<Site>();
 
-        private static int Sort(Site s1, Site s2)
+        internal static int SortByYThenX(Site s1, Site s2)
         {
-            int returnValue = 0;
+            if(s1.Coord.Y < s2.Coord.Y) return -1;
+            if(s1.Coord.Y > s2.Coord.Y) return 1;
+            if(s1.Coord.X < s2.Coord.X) return -1;
+            if(s1.Coord.X > s2.Coord.X) return 1;
+            return 0;
+        }
 
-            // TODO
-            // int returnValue = Voronoi.compareByYThenX(s1, s2);
+        internal static int SortAndReindex(Site s1, Site s2)
+        {
+            int returnValue = SortByYThenX(s1, s2);
 
             if(returnValue == -1)
             {
@@ -100,7 +106,10 @@ namespace coneil.Math.Voronoi
 
         internal void ReorderEdges()
         {
-            // TODO
+            var reorder = new EdgeReorderer(_edges, EdgeReorderer.Criterion.VERTEX);
+            _edges = reorder.Edges;
+            _edgeOrientations = reorder.EdgeOrientations;
+            reorder = null;
         }
 
         internal List<Point> Region(Rectangle clippingBounds)
