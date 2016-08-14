@@ -15,6 +15,46 @@ namespace coneil.Math.Voronoi
         public Point Vertex;
         public double YStar;
 
+        public static Point GetIntersection(HalfEdge h0, HalfEdge h1)
+        {
+            Edge e0 = h0.Edge;
+            Edge e1 = h1.Edge;
+            if(e0 == null || e1 == null) return new Point();
+
+            if(e0.RightSite == e1.RightSite) return new Point();
+
+            double determinant = e0.A * e1.B - e0.B * e1.A;
+            if(-1.0e-10 < determinant && determinant < 1.0e-10)
+            {
+                // edges are parallel
+                return new Point();
+            }
+
+            double intersectionX = (e0.C * e1.B - e1.C * e0.B) / determinant;
+            double intersectionY = (e1.C * e0.A - e0.C * e1.A) / determinant;
+
+            HalfEdge halfEdge;
+            Edge edge;
+            if(Site.SortByYThenX(e0.RightSite, e1.RightSite) < 0)
+            {
+                halfEdge = h0;
+                edge = e0;
+            }
+            else
+            {
+                halfEdge = h1;
+                edge = e1;
+            }
+
+            bool rightOfSite = intersectionX >= edge.RightSite.Coord.X;
+            if((rightOfSite && halfEdge.LeftRight == LR.LEFT) || (!rightOfSite && halfEdge.LeftRight == LR.RIGHT))
+            {
+                return new Point();
+            }
+
+            return new Point(intersectionX, intersectionY);
+        }
+
         internal bool IsLeftOf(Point p)
         {
             Site topSite = Edge.RightSite;

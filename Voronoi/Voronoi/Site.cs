@@ -112,7 +112,7 @@ namespace coneil.Math.Voronoi
             reorder = null;
         }
 
-        internal List<Point> Region(Rectangle clippingBounds)
+        internal List<Point> GetRegion(Rectangle clippingBounds)
         {
             if(_edges == null || _edges.Count == 0)
                 return new List<Point>();

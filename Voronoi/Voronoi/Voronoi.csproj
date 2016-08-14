@@ -48,8 +48,10 @@
     <Compile Include="Geometry\Polygon.cs" />
     <Compile Include="Geometry\Rectangle.cs" />
     <Compile Include="HalfEdge.cs" />
+    <Compile Include="HalfEdgePriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.cs" />
+    <Compile Include="SiteList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

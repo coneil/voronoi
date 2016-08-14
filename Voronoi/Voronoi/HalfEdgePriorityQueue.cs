@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using coneil.Math.Voronoi.Geometry;
 
 namespace coneil.Math.Voronoi

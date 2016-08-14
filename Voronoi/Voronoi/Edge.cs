@@ -48,10 +48,7 @@ namespace coneil.Math.Voronoi
             return LeftVertex.IsUnassigned() || RightVertex.IsUnassigned();
         }
 
-        internal double SitesDistance()
-        {
-            return Point.Distance(LeftVertex, RightVertex);
-        }
+        internal double SitesDistance { get { return Point.Distance(LeftVertex, RightVertex); } }
 
         internal LineSegment VoronoiEdge
         {
