@@ -43,6 +43,18 @@ namespace coneil.Math.Voronoi
             set { _sites[LR.RIGHT] = value; }
         }
 
+        internal void SetVertex(LR lr, Point v)
+        {
+            if(lr == LR.LEFT)
+            {
+                LeftVertex = v;
+            }
+            else
+            {
+                RightVertex = v;
+            }
+        }
+
         internal bool IsPartOfConvexHull()
         {
             return LeftVertex.IsUnassigned() || RightVertex.IsUnassigned();

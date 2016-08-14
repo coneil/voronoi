@@ -155,6 +155,13 @@ namespace coneil.Math.Voronoi
 
             s_pool.Add(this);
         }
+
+        public void ForceDispose()
+        {
+            EdgeListRightNeighbor = EdgeListLeftNeighbor = null;
+            NextInPriorityQueue = null;
+            s_pool.Add(this);
+        }
         #endregion
     }
 }
