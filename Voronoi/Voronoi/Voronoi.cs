@@ -7,6 +7,24 @@ namespace coneil.Math.Voronoi
 {
     public sealed class Voronoi
     {
+        static void Main(string[] args)
+        {
+            const int NUM_POINTS = 1 << 14;
+            const int SIZE = 1000;
+
+            Random rnd = new Random();
+            List<Point> points = new List<Point>();
+            for(int i = 0; i < NUM_POINTS; i++)
+            {
+                var p = new Point(rnd.NextDouble() * SIZE, rnd.NextDouble() * SIZE);
+                points.Add(p);
+            }
+            
+            
+            var v = new Voronoi(points, new List<uint>(), new Rectangle(0, 0, SIZE, SIZE));
+            System.Diagnostics.Debug.WriteLine(v.Edges.Count);
+        }
+
         public Rectangle PlotBounds { get; private set; }
         public List<Edge> Edges { get; private set; }
 
@@ -197,7 +215,7 @@ namespace coneil.Math.Voronoi
                 }
                 return he.Edge.RightSite;
             };
-
+            
             while(true)
             {
                 if(!heap.IsEmpty())
@@ -309,22 +327,23 @@ namespace coneil.Math.Voronoi
                     break;
                 }
 
-                heap.Dispose();
-                edgeList.Dispose();
-
-                foreach(var he in halfEdges)
-                {
-                    he.ForceDispose();
-                }
-                halfEdges.Clear();
-
-                foreach(var e in Edges)
-                {
-                    e.ClipVertices(PlotBounds.Left, PlotBounds.Right, PlotBounds.Top, PlotBounds.Bottom);
-                }
-
-                vertices.Clear();
             }
+
+            heap.Dispose();
+            edgeList.Dispose();
+
+            foreach(var he in halfEdges)
+            {
+                he.ForceDispose();
+            }
+            halfEdges.Clear();
+
+            foreach(var e in Edges)
+            {
+                e.ClipVertices(PlotBounds.Left, PlotBounds.Right, PlotBounds.Top, PlotBounds.Bottom);
+            }
+
+            vertices.Clear();
         }
 
         int CompareSiteByPoint(Site s1, Point p1)
@@ -446,7 +465,7 @@ namespace coneil.Math.Voronoi
             }
         }
 
-        class Node
+        internal class Node
         {
             public static List<Node> Pool = new List<Node>();
 

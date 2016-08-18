@@ -4,13 +4,15 @@ namespace coneil.Math.Voronoi.Geometry
 {
     public struct Point
     {
-        public double X = double.MinValue;
-        public double Y = double.MinValue;
+        public double X;
+        public double Y;
+        private bool _initialized;
 
         public Point(double x, double y)
         {
             X = x;
             Y = y;
+            _initialized = true;
         }
 
         public bool Equals(Point p)
@@ -22,13 +24,14 @@ namespace coneil.Math.Voronoi.Geometry
 
         public bool IsUnassigned()
         {
-            return X == double.MinValue && Y == double.MinValue;
+            return !_initialized;
         }
 
         public void Reset()
         {
             X = double.MinValue;
             Y = double.MinValue;
+            _initialized = false;
         }
 
         public static double Distance(Point p0, Point p1)

@@ -9,9 +9,6 @@ namespace coneil.Math.Voronoi
 
     public sealed class Edge
     {
-        private static List<Edge> s_pool = new List<Edge>();
-        private static int _nEdges = 0;
-
         internal static Edge DELETED = new Edge();
 
         // ax + by = c
@@ -24,20 +21,20 @@ namespace coneil.Math.Voronoi
         internal Point RightVertex { get; private set; }
 
         // left/right vertices adjusted to fit within bounds
-        internal Dictionary<LR, Point> ClippedVertices;
+        public Dictionary<LR, Point> ClippedVertices;
         // the 2 sites this edge runs alongside
         private Dictionary<LR, Site> _sites;
         private int _edgeIndex;
 
-        internal bool Visible { get { return ClippedVertices != null; } }
+        public bool Visible { get { return ClippedVertices != null; } }
 
-        internal Site LeftSite 
+        public Site LeftSite 
         { 
             get { return _sites[LR.LEFT]; }
             set { _sites[LR.LEFT] = value; }
         }
 
-        internal Site RightSite
+        public Site RightSite
         {
             get { return _sites[LR.RIGHT]; }
             set { _sites[LR.RIGHT] = value; }
@@ -62,7 +59,7 @@ namespace coneil.Math.Voronoi
 
         internal double SitesDistance { get { return Point.Distance(LeftVertex, RightVertex); } }
 
-        internal LineSegment VoronoiEdge
+        public LineSegment VoronoiEdge
         {
             get
             {
@@ -71,7 +68,7 @@ namespace coneil.Math.Voronoi
             }
         }
 
-        internal LineSegment DelaunayLine
+        public LineSegment DelaunayLine
         {
             get
             {
@@ -237,9 +234,8 @@ namespace coneil.Math.Voronoi
             e.LeftSite = site0;
             e.RightSite = site1;
             
-            // TODO
-            // site0.AddEdge(e);
-            // site1.AddEdge(e);
+            site0.AddEdge(e);
+            site1.AddEdge(e);
 
             e.A = a;
             e.B = b;
@@ -250,7 +246,6 @@ namespace coneil.Math.Voronoi
 
         private Edge()
         {
-            _edgeIndex = _nEdges++;
             Init();
         }
 
@@ -261,19 +256,7 @@ namespace coneil.Math.Voronoi
 
         static Edge Create()
         {
-            Edge e;
-            if(s_pool.Count > 0)
-            {
-                e = s_pool[s_pool.Count - 1];
-                s_pool.RemoveAt(s_pool.Count - 1);
-                e.Init();
-            }
-            else
-            {
-                e = new Edge();
-            }
-
-            return e;
+            return new Edge();
         }
 
         public void Dispose()
@@ -282,7 +265,6 @@ namespace coneil.Math.Voronoi
             ClippedVertices = null;
             LeftVertex.Reset();
             RightVertex.Reset();
-            s_pool.Add(this);
         }
         #endregion
     }

@@ -114,8 +114,6 @@ namespace coneil.Math.Voronoi
         }
 
         #region CONSTRUCT/DESTRUCT
-        private static List<HalfEdge> s_pool = new List<HalfEdge>();
-
         public static HalfEdge CreateDummy()
         {
             return Create(null, LR.LEFT);
@@ -123,17 +121,7 @@ namespace coneil.Math.Voronoi
 
         public static HalfEdge Create(Edge edge, LR lr)
         {
-            if(s_pool.Count > 0)
-            {
-                HalfEdge he = s_pool[s_pool.Count - 1];
-                s_pool.RemoveAt(s_pool.Count - 1);
-                he.Init(edge, lr);
-                return he;
-            }
-            else
-            {
-                return new HalfEdge(edge, lr);
-            }
+            return new HalfEdge(edge, lr);
         }
 
         private HalfEdge(Edge edge, LR lr)
@@ -152,15 +140,12 @@ namespace coneil.Math.Voronoi
         {
             if(EdgeListLeftNeighbor != null || EdgeListRightNeighbor != null) return;
             if(NextInPriorityQueue != null) return;
-
-            s_pool.Add(this);
         }
 
         public void ForceDispose()
         {
             EdgeListRightNeighbor = EdgeListLeftNeighbor = null;
             NextInPriorityQueue = null;
-            s_pool.Add(this);
         }
         #endregion
     }

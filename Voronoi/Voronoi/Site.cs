@@ -5,10 +5,8 @@ using coneil.Math.Voronoi.Geometry;
 
 namespace coneil.Math.Voronoi
 {
-    internal sealed class Site
+    public sealed class Site
     {
-        private static List<Site> s_pool = new List<Site>();
-
         internal static int SortByYThenX(Site s1, Site s2)
         {
             if(s1.Coord.Y < s2.Coord.Y) return -1;
@@ -49,7 +47,7 @@ namespace coneil.Math.Voronoi
         internal Point Coord { get; private set; }
         internal uint Color { get; private set; }
         internal double Weight { get; private set; }
-        internal Edge[] Edges { get { return _edges.ToArray() } }
+        internal Edge[] Edges { get { return _edges.ToArray(); } }
 
         private int _siteIndex;
         private List<Edge> _edges;
@@ -74,7 +72,7 @@ namespace coneil.Math.Voronoi
 
         internal Edge GetNearestEdge()
         {
-            _edges.OrderBy(x => x.SitesDistance());
+            _edges.OrderBy(x => x.SitesDistance);
             return _edges[0];
         }
 
@@ -297,19 +295,7 @@ namespace coneil.Math.Voronoi
         #region CONSTRUCT/DESTRUCT
         public static Site Create(Point p, int index, double weight, uint color)
         {
-            Site s;
-            if(s_pool.Count > 0)
-            {
-                s = s_pool[s_pool.Count - 1];
-                s_pool.RemoveAt(s_pool.Count - 1);
-                s.Init(p, index, weight, color);
-            }
-            else
-            {
-                s = new Site(p, index, weight, color);
-            }
-
-            return s;
+            return new Site(p, index, weight, color);
         }
 
         private Site(Point p, int index, double weight, uint color)
@@ -330,7 +316,6 @@ namespace coneil.Math.Voronoi
         {
             Coord.Reset();
             Clear();
-            s_pool.Add(this);
         }
 
         void Clear()
@@ -347,12 +332,12 @@ namespace coneil.Math.Voronoi
         #endregion
     }
 
-    sealed static class BoundsCheck
+    static class BoundsCheck
     {
-        public static const int TOP = 1;
-        public static const int BOTTOM = 2;
-        public static const int LEFT = 4;
-        public static const int RIGHT = 8;
+        public const int TOP = 1;
+        public const int BOTTOM = 2;
+        public const int LEFT = 4;
+        public const int RIGHT = 8;
 
         public static int Check(Point point, Rectangle bounds)
         {

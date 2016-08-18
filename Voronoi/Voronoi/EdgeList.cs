@@ -52,7 +52,18 @@ namespace coneil.Math.Voronoi
 
         internal HalfEdge GetEdgeListLeftNeighbor(Point p)
         {
-            int bucket = Convert.ToInt32((p.X - _xMin) / _deltaX * _hashSize);
+            if(double.IsNaN(p.X) || double.IsNaN(p.Y)) return null;
+
+            double dBucket = (p.X - _xMin) / _deltaX * _hashSize;
+            if(double.IsNaN(dBucket))
+                dBucket = 0;
+
+            if(dBucket < int.MinValue)
+                dBucket = int.MinValue;
+            else if(dBucket > int.MaxValue)
+                dBucket = int.MaxValue;
+
+            int bucket = Convert.ToInt32(dBucket);
             if(bucket < 0)
                 bucket = 0;
 

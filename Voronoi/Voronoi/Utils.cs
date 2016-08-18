@@ -5,7 +5,7 @@ using coneil.Math.Voronoi.Geometry;
 
 namespace coneil.Math.Voronoi
 {
-    internal sealed static class Utils
+    internal static class Utils
     {
         public static List<LineSegment> GetDelaunayLinesForEdges(List<Edge> edges)
         {

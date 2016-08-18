@@ -40,10 +40,17 @@ namespace coneil.Math.Voronoi
             }
 
             previous = _hash[insertionBucket];
-            next = previous.NextInPriorityQueue;
-            while(next != null && (halfEdge.YStar > next.YStar || (halfEdge.YStar == next.YStar && halfEdge.Vertex.X > next.Vertex.X)))
+            while(previous.NextInPriorityQueue != null)
             {
-                previous = next;
+                next = previous.NextInPriorityQueue;
+                if(halfEdge.YStar > next.YStar || (halfEdge.YStar == next.YStar && halfEdge.Vertex.X > next.Vertex.X))
+                {
+                    previous = next;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             halfEdge.NextInPriorityQueue = previous.NextInPriorityQueue;
